@@ -205,4 +205,4 @@ Known Issues
 - [[[3]]] The Open Group Base Specifications Issue 7
           http://pubs.opengroup.org/onlinepubs/9699919799/functions/contents.html
 - [[[4]]] CERT C Secure Coding Standard
-          https://www.securecoding.cert.org/confluence/display/seccode/CERT+C+Secure+Coding+Standard
+          https://www.securecoding.cert.org/confluence/display/seccode/CERT+C+Coding+Standard          
