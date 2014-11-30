@@ -95,3 +95,6 @@ GTAGS
 *.orig
 *~
 \#*#
+
+# Whitelist the EditorConfig file since some rule is blocking it...
+!.editorconfig
