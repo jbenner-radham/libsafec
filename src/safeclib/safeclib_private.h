@@ -73,7 +73,6 @@
 # include <limits.h>
 #endif
 
-#define EXPORT_SYMBOL(sym)
 #define RCNEGATE(x)  (x)
 
 #define slprintf(...) fprintf(stderr, __VA_ARGS__)
@@ -88,6 +87,6 @@
 #define sldebug_printf(...)
 #endif
 
-#include "safe_lib.h"
+#include "../../include/safe_lib.h"
 
 #endif /* __SAFECLIB_PRIVATE_H__ */
