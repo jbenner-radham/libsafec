@@ -1,0 +1,3 @@
+[submodule "src/libsafec-strnlen_s"]
+	path = src/libsafec-strnlen_s
+	url = https://github.com/jbenner55/libsafec-strnlen_s.git
