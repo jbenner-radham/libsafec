@@ -4,8 +4,6 @@
  * @link https://www.securecoding.cert.org/confluence/display/seccode/DCL09-C.+Declare+functions+that+return+errno+with+a+return+type+of+errno_t
  */
 #ifndef __STDC_LIB_EXT1__
-    //-/ Moved to `safe_lib_errno.h`
-    //-/ typedef int errno_t;
     typedef size_t rsize_t;
 
     #ifndef RSIZE_MAX
