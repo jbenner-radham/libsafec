@@ -14,9 +14,11 @@
  *    strncpy_s
  *
  * SYNOPSIS
- *    #include "safe_str_lib.h"
- *    errno_t
- *    strncpy_s(char *dest, rsize_t dmax, const char *src, rsize_t slen)
+ *    ```c
+ *    #include "strncpy_s.h"
+ *
+ *    errno_t strncpy_s(char *dest, rsize_t dmax, const char *src, rsize_t slen);
+ *    ```
  *
  * DESCRIPTION
  *    The strncpy_s function copies not more than slen successive characters
@@ -121,7 +123,7 @@ errno_t strncpy_s(char *dest, rsize_t dmax, const char *src, rsize_t slen)
                 return ESOVRLP;
             }
 
-	    if (slen == 0) {
+        if (slen == 0) {
                 /*
                  * Copying truncated to slen chars.  Note that the TR says to
                  * copy slen chars plus the null char.  We null the slack.
@@ -159,7 +161,7 @@ errno_t strncpy_s(char *dest, rsize_t dmax, const char *src, rsize_t slen)
                 return ESOVRLP;
             }
 
-	    if (slen == 0) {
+        if (slen == 0) {
                 /*
                  * Copying truncated to slen chars.  Note that the TR says to
                  * copy slen chars plus the null char.  We null the slack.
