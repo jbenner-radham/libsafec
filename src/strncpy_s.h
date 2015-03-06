@@ -1,13 +1,13 @@
 /*------------------------------------------------------------------
- * strncpy_s.c
+ * strncpy_s.h
  *
  * October 2008, Bo Berry
  * Modified 2015, James Benner <james.benner@gmail.com>
  *------------------------------------------------------------------*/
 
-#include "safeclib_private.h"
-#include "safe_str_constraint.h"
-#include "../../include/safe_str_lib.h"
+#pragma once
+
+#include "safe_lib.h"
 
 /*
  * NAME
@@ -72,29 +72,25 @@
  *    strcat_s(), strncat_s(), strcpy_s()
  *-
  */
-errno_t
-strncpy_s (char *dest, rsize_t dmax, const char *src, rsize_t slen)
+errno_t strncpy_s(char *dest, rsize_t dmax, const char *src, rsize_t slen)
 {
     rsize_t orig_dmax;
     char *orig_dest;
     const char *overlap_bumper;
 
     if (dest == NULL) {
-        invoke_safe_str_constraint_handler("strncpy_s: dest is null",
-                   NULL, ESNULLP);
-        return RCNEGATE(ESNULLP);
+        invoke_safe_str_constraint_handler("strncpy_s: dest is null", NULL, ESNULLP);
+        return ESNULLP;
     }
 
     if (dmax == 0) {
-        invoke_safe_str_constraint_handler("strncpy_s: dmax is 0",
-                   NULL, ESZEROL);
-        return RCNEGATE(ESZEROL);
+        invoke_safe_str_constraint_handler("strncpy_s: dmax is 0", NULL, ESZEROL);
+        return ESZEROL;
     }
 
     if (dmax > RSIZE_MAX_STR) {
-        invoke_safe_str_constraint_handler("strncpy_s: dmax exceeds max",
-                   NULL, ESLEMAX);
-        return RCNEGATE(ESLEMAX);
+        invoke_safe_str_constraint_handler("strncpy_s: dmax exceeds max", NULL, ESLEMAX);
+        return ESLEMAX;
     }
 
     /* hold base in case src was not copied */
@@ -102,36 +98,27 @@ strncpy_s (char *dest, rsize_t dmax, const char *src, rsize_t slen)
     orig_dest = dest;
 
     if (src == NULL) {
-        handle_error(orig_dest, orig_dmax, "strncpy_s: "
-                     "src is null",
-                     ESNULLP);
-        return RCNEGATE(ESNULLP);
+        handle_error(orig_dest, orig_dmax, "strncpy_s: src is null", ESNULLP);
+        return ESNULLP;
     }
 
     if (slen == 0) {
-        handle_error(orig_dest, orig_dmax, "strncpy_s: "
-                     "slen is zero",
-                     ESZEROL);
-        return RCNEGATE(ESZEROL);
+        handle_error(orig_dest, orig_dmax, "strncpy_s: slen is zero", ESZEROL);
+        return ESZEROL;
     }
 
     if (slen > RSIZE_MAX_STR) {
-        handle_error(orig_dest, orig_dmax, "strncpy_s: "
-                     "slen exceeds max",
-                     ESLEMAX);
-        return RCNEGATE(ESLEMAX);
+        handle_error(orig_dest, orig_dmax, "strncpy_s: slen exceeds max", ESLEMAX);
+        return ESLEMAX;
     }
-
 
    if (dest < src) {
        overlap_bumper = src;
 
         while (dmax > 0) {
             if (dest == overlap_bumper) {
-                handle_error(orig_dest, orig_dmax, "strncpy_s: "
-                        "overlapping objects",
-                        ESOVRLP);
-                return RCNEGATE(ESOVRLP);
+                handle_error(orig_dest, orig_dmax, "strncpy_s: overlapping objects", ESOVRLP);
+                return ESOVRLP;
             }
 
 	    if (slen == 0) {
@@ -144,16 +131,17 @@ strncpy_s (char *dest, rsize_t dmax, const char *src, rsize_t slen)
 #else
                 *dest = '\0';
 #endif
-                return RCNEGATE(EOK);
+                return EOK;
             }
 
             *dest = *src;
+
             if (*dest == '\0') {
 #ifdef SAFECLIB_STR_NULL_SLACK
                 /* null slack */
                 while (dmax) { *dest = '\0'; dmax--; dest++; }
 #endif
-                return RCNEGATE(EOK);
+                return EOK;
             }
 
             dmax--;
@@ -167,10 +155,8 @@ strncpy_s (char *dest, rsize_t dmax, const char *src, rsize_t slen)
 
         while (dmax > 0) {
             if (src == overlap_bumper) {
-                handle_error(orig_dest, orig_dmax, "strncpy_s: "
-                        "overlapping objects",
-                        ESOVRLP);
-                return RCNEGATE(ESOVRLP);
+                handle_error(orig_dest, orig_dmax, "strncpy_s: overlapping objects", ESOVRLP);
+                return ESOVRLP;
             }
 
 	    if (slen == 0) {
@@ -183,16 +169,17 @@ strncpy_s (char *dest, rsize_t dmax, const char *src, rsize_t slen)
 #else
                 *dest = '\0';
 #endif
-                return RCNEGATE(EOK);
+                return EOK;
             }
 
             *dest = *src;
+
             if (*dest == '\0') {
 #ifdef SAFECLIB_STR_NULL_SLACK
                 /* null slack */
                 while (dmax) { *dest = '\0'; dmax--; dest++; }
 #endif
-                return RCNEGATE(EOK);
+                return EOK;
             }
 
             dmax--;
@@ -205,8 +192,6 @@ strncpy_s (char *dest, rsize_t dmax, const char *src, rsize_t slen)
     /*
      * the entire src was not copied, so zero the string
      */
-    handle_error(orig_dest, orig_dmax, "strncpy_s: not enough "
-                 "space for src",
-                 ESNOSPC);
-    return RCNEGATE(ESNOSPC);
+    handle_error(orig_dest, orig_dmax, "strncpy_s: not enough space for src", ESNOSPC);
+    return ESNOSPC;
 }
