@@ -56,7 +56,7 @@ AC_CONFIG_AUX_DIR([build-tools])
 # really severe build strictness also place generated object files (.o)
 # into the same directory as their source files, in order to avoid
 # collisions when non-recursive make is used.
-AM_INIT_AUTOMAKE([1.10 no-define foreign subdir-objects dist-bzip2 -Wall
+AM_INIT_AUTOMAKE([1.10 no-define foreign subdir-objects dist-bzip2 -Wall -Wno-extra-portability
 		  -Werror])
 
 # Check if automake supports 'pretty' builds, if so enable them by default
